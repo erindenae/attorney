@@ -1,22 +1,22 @@
 /*
 #1 = b52626
-#2 = b74545
+#2 = a33542
 */
 a {
     color: #b52626;
 }
 
 a:hover {
-    color: #b74545;
+    color: #a33542;
 }
 
 /* menu */
 .nav > li > a:hover {
-    color: #b74545;
+    color: #a33542;
 }
 
 .navbar .navbar-nav > .active > a {
-    color: #b74545;
+    color: #a33542;
 }
 
 /* flexslider */
@@ -29,7 +29,7 @@ a:hover {
 }
 
 .testimonial span.author a {
-    color: #b74545;
+    color: #a33542;
 }
 
 /* --- icon box hover --- */
@@ -40,7 +40,7 @@ a:hover {
 
 .no-touch .hi-icon-effect-5 .hi-icon:hover {
     background: #b52626;
-    box-shadow: 0 0 0 8px  #b74545;
+    box-shadow: 0 0 0 8px  #a33542;
 }
 
 /* portfolio */
@@ -50,7 +50,7 @@ a:hover {
 
 /* btn */
 .btn-theme {
-    background: #b74545;
+    background: #a33542;
 }
 
 .btn-theme:hover, .btn-theme:focus, .btn-theme:active {
@@ -59,7 +59,7 @@ a:hover {
 
 .btn-cta, .btn-cta.btn-lg {
     background: #b52626;
-    border-color: #b74545;
+    border-color: #a33542;
 }
 
 .btn-cta:focus, .btn-cta:active {

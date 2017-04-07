@@ -1,11 +1,69 @@
-var gulp = require('gulp'),
-	sass = require('gulp-sass');
+var gulp = require('gulp');
+
+// Include Our Plugins
+var jshint = require('gulp-jshint');
+var sass = require('gulp-sass');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
+var connect = require('gulp-connect');
+var connectLivereload = require('connect-livereload');
+var opn = require('opn');
+var gulpLivereload = require('gulp-livereload');
 
 
+var config = {
+    rootDir: __dirname,
+    servingPort: 8000,
 
-	gulp.task('sass', function(){
-	  return gulp.src('source-files')
-	    .pipe(sass()) // Using gulp-sass
-	    .pipe(gulp.dest('destination'))
-	});
+    // the files you want to watch for changes for live reload
+    filesToWatch: ['*.{html,css,js}', '!Gulpfile.js']
+}
+// Lint Task
+gulp.task('lint', function() {
+    return gulp.src('js/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
 
+// Compile Our Sass
+gulp.task('sass', function() {
+    return gulp.src('scss/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('dist/css'));
+});
+
+// Concatenate & Minify JS
+gulp.task('scripts', function() {
+    return gulp.src('js/*.js')
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('all.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
+});
+
+// Watch Files For Changes
+gulp.task('watch', function() {
+    gulpLivereload.listen();
+     gulp.watch(config.filesToWatch, function(file) {
+       gulp.src(file.path)
+         .pipe(gulpLivereload());
+     });
+    gulp.watch('js/*.js', ['lint', 'scripts']);
+    gulp.watch('scss/*.scss', ['sass']);
+});
+
+gulp.task('serve', ['connect'], function () {
+  return opn('http://localhost:' + config.servingPort);
+});
+
+gulp.task('connect', function(){
+  return connect()
+    .use(connectLivereload())
+    .use(connect.static(config.rootDir))
+    .listen(config.servingPort);
+});
+
+// Default Task
+gulp.task('default', ['lint', 'sass', 'scripts', 'watch', 'serve']);
